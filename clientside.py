@@ -121,7 +121,6 @@ idx_ = []
 label_dict = [[] for _ in range(class_num)]
 
 for i in range(len(aux_dataset.targets)):
-
     if tmp_target_[aux_dataset.targets[i]] > 0:
         idx_.append(i)
         tmp_target_[aux_dataset.targets[i]] -= 1
@@ -140,7 +139,13 @@ for i in range(len(aux_dataset.targets)):
 
 
 def val_split(
-    epoch, client_model_val, server_model_val, data_loader, poison=False, explain="", log_out=True
+    epoch,
+    client_model_val,
+    server_model_val,
+    data_loader,
+    poison=False,
+    explain="",
+    log_out=True,
 ):
     loss_list = []
     acc_list = []
@@ -249,15 +254,12 @@ def client_attack(client_num=9):
     all_pre_opt = Adam(client_model_para_list_pre, weight_decay=0.0001)
     all_after_opt = Adam(client_model_para_list_after, weight_decay=0.0001)
 
-
-
     idxs = np.random.permutation(len(train_dataset))
     batch_idxs = np.array_split(idxs, client_num)
     net_dataidx_map = {i: batch_idxs[i] for i in range(client_num)}
     # 生成训练数据集
     train_dataloader_list = []
     for client_id, dataidx in net_dataidx_map.items():
-
         _aux_dataset = copy.deepcopy(train_dataset)
         _aux_dataset.data = _aux_dataset.data[net_dataidx_map[client_id]]
 
@@ -269,19 +271,15 @@ def client_attack(client_num=9):
         )
 
     for epoch in range(_epochs):
-
         server_model.train()
         for ids in range(client_num):
             client_model_list[ids].train()
 
         if epoch <= FT_aux_epoch:
-
             for data_list in zip(*train_dataloader_list):
-
                 all_pre_opt.zero_grad()
 
                 for c_id, inp_label in enumerate(data_list):
-
                     client_model = client_model_list[c_id]
                     client_model.train()
                     server_model.train()
@@ -302,7 +300,7 @@ def client_attack(client_num=9):
                 opt = all_after_opt
             else:
                 opt = all_pre_opt
-            
+
             for data_list in zip(*train_dataloader_list):
                 opt.zero_grad()
 
@@ -310,11 +308,11 @@ def client_attack(client_num=9):
                     inputs, targets = inp_label[0], inp_label[1]
                     if c_id == m_cid and epoch % posion_f == 1:
                         inputs, targets = gen_poison_data(
-                            "trigger", 
+                            "trigger",
                             inputs,
-                            targets, 
-                            noise=0.0, 
-                            p=float(settings['AUX']['p']),
+                            targets,
+                            noise=0.0,
+                            p=float(settings["AUX"]["p"]),
                         )
 
                     inputs, targets = inputs.to(device), targets.to(device)
@@ -349,9 +347,8 @@ def client_attack(client_num=9):
                     poison=True,
                     explain=f"vic {ids} poison=True",
                 )
-            
-        else:
 
+        else:
             for ids in range(client_num):
                 vic_acc, _ = val_split(
                     epoch,
