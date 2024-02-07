@@ -1,7 +1,6 @@
 log_save_path: ./log_save/ResNet34_vanilla_layer2_10c_cifar10.txt
 
 device: cuda:1
-radio: 0.90
 posion_f: 2
 
 client_num: 9
@@ -15,4 +14,3 @@ AUX:
   noise: 0.0
   p: 0.1
   reset_aux_model_epoch: 1
-  replace: 0.8
