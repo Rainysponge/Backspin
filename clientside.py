@@ -107,8 +107,8 @@ val_dataset = Dataset_use(root=test_path, transform=transform_test, train=False)
 
 point = len(train_dataset) // 10
 idx = np.random.permutation(len(train_dataset))
-pub_idx = idx[point:]  # 用这个训练
-aux_idx = idx[:point]  # 用这个训练
+pub_idx = idx[point:]
+aux_idx = idx[:point]
 
 
 aux_dataset.data = aux_dataset.data[aux_idx]
@@ -165,7 +165,6 @@ def val_split(
             pred = outputs.max(dim=-1)[-1]
             cur_acc = pred.eq(target_).float().mean()
             acc_list.append(cur_acc)
-    # print("平均准确率：", np.mean(acc_list), "平均损失：", np.mean(loss_list))
     if log_out:
         myLog.info(
             "%s val: epoch: %s acc：%s loss：%s"
@@ -187,7 +186,7 @@ def client_attack(client_num=9):
 
     server_model = ResNet34_server(num_classes=10).to(device)
     client_num += 1
-    m_cid = client_num - 1  # 假设最后一个是恶意客户端
+    m_cid = client_num - 1
 
     val_dataloader = DataLoader(dataset=val_dataset, batch_size=batch_size)
 
@@ -257,7 +256,6 @@ def client_attack(client_num=9):
     idxs = np.random.permutation(len(train_dataset))
     batch_idxs = np.array_split(idxs, client_num)
     net_dataidx_map = {i: batch_idxs[i] for i in range(client_num)}
-    # 生成训练数据集
     train_dataloader_list = []
     for client_id, dataidx in net_dataidx_map.items():
         _aux_dataset = copy.deepcopy(train_dataset)
