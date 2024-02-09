@@ -153,42 +153,7 @@ def gen_poison_dataset(dataset, idxs=None, poison_size=8, p=1):
     return dataset
 
 
-# def gen_poison_data(poison_method, inputs, targets, p=1.0):
-#     # 污染dataloader生成的input and targets
-#     tmp_inputs = inputs.clone()
-#     tmp_targets = targets.clone()
-#     length = round(p * len(tmp_inputs))
-#     tmp_inputs = torch.Tensor(np.transpose(tmp_inputs.numpy(), (0, 2, 3, 1)))
-#     # poison data
-#     if poison_method == 'mid_random_noise':
-#         tmp_inputs[:length, 12:20, 12:20, :] = torch.from_numpy(np.random.rand(length, 8, 8, tmp_inputs.shape[-1]))
-#         tmp_targets[:length] = torch.Tensor(np.array([0 for _ in range(length)]))
-#     elif poison_method == 'trigger':
-#         trigger = np.zeros([length, 4, 4, tmp_inputs.shape[-1]])
-#         print(trigger[:length, 0, 0, :tmp_inputs.shape[-1]].shape)
-#         print(np.random.rand(length, 1, 1, tmp_inputs.shape[-1]).shape)
-#         trigger[:length, 0, 0, :tmp_inputs.shape[-1]] = np.random.rand(length, 1, 1, tmp_inputs.shape[-1])
-#         trigger[:length, 0, 2, :tmp_inputs.shape[-1]] = np.random.rand(length, 1, 1, tmp_inputs.shape[-1])
-#         trigger[:length, 1, 1:4, :tmp_inputs.shape[-1]] = np.random.rand(length, 1, 3, tmp_inputs.shape[-1])
-#         trigger[:length, 2, 0:3, :tmp_inputs.shape[-1]] = np.random.rand(length, 1, 3, tmp_inputs.shape[-1])
-#         trigger[:length, 3, 2:4, :tmp_inputs.shape[-1]] = np.random.rand(length, 1, 2, tmp_inputs.shape[-1])
-#         # print(trigger.shape)
-#         # print(tmp_inputs.shape)
-#         tmp_inputs[:length, -6:-2, -6:-2, :] = torch.from_numpy(trigger)
-#         tmp_targets[:length] = torch.Tensor(np.array([0 for _ in range(length)]))
-#
-#     # add poison target
-#     # e.g target -> 0
-#     elif poison_method == 'dismissing':
-#         for i in range(len(tmp_targets)):
-#             if tmp_targets[i] == torch.Tensor(np.array([5])):
-#                 tmp_targets[i] = torch.Tensor(np.array([9]))
-#
-#     tmp_inputs = torch.Tensor(np.transpose(tmp_inputs.numpy(), (0, 3, 1, 2)))
-#     return tmp_inputs, tmp_targets.long()
-
 def gen_poison_data(poison_method, inputs, targets, noise=0, p=1.0, clean_label=False):
-    # 污染dataloader生成的input and targets
     tmp_inputs = inputs.clone()
     tmp_targets = targets.clone()
     length = round(p * len(tmp_inputs))
