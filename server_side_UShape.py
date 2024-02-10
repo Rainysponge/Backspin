@@ -1,3 +1,6 @@
+"""
+Server side attack For U-Shape
+"""
 
 import copy
 

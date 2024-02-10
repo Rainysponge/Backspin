@@ -1,6 +1,5 @@
 """
 Server side attack
-
 """
 
 import copy
