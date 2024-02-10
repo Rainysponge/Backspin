@@ -1,7 +1,6 @@
 """
 Client-Side Attack
 """
-
 import copy
 import torch
 import yaml
@@ -12,7 +11,7 @@ import torchvision
 from PIL import Image
 
 import torch.nn as nn
-
+import torchvision.transforms as transforms
 from torch.optim import Adam, SGD
 from torch.utils.data import DataLoader, Subset
 from torchvision.datasets import MNIST, CIFAR10, ImageFolder, CIFAR100
@@ -167,7 +166,7 @@ def val_split(
             acc_list.append(cur_acc)
     if log_out:
         myLog.info(
-            "%s val: epoch: %s acc：%s loss：%s"
+            "%s val: epoch: %s acc: %s loss: %s"
             % (
                 explain,
                 epoch,
@@ -182,7 +181,6 @@ def val_split(
 
 
 def client_attack(client_num=9):
-    # client_model = ResNet34_client().to(device)
 
     server_model = ResNet34_server(num_classes=10).to(device)
     client_num += 1
@@ -356,7 +354,7 @@ def client_attack(client_num=9):
                     poison=False,
                     explain=f"vic {ids} poison=False",
                 )
-            myLog.info("vic poison=True val: epoch: %s acc：0.0 loss：100" % epoch)
+            myLog.info("vic poison=True val: epoch: %s acc: 0.0 loss: 100" % epoch)
         myLog.info(
             "-------------------------------------------------------------------------"
         )
