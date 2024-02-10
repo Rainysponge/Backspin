@@ -1,0 +1,17 @@
+log_save_path: ./log_save/ba_Ushape/shadow_server/ResNet34_Ushaped_cifar100_layer3_testLIA_0.1_nex_0.0002_1.0.txt
+
+device: cuda:0
+
+dataset: cifar100
+dataset_repo: ./dataRepo/cifar100
+
+batch: 64
+step: 400 # useless
+
+AUX:
+  sample_per_class: 500000 # useless
+  noise: 0.0
+  p: 0.1
+  reset_aux_model_epoch: 1
+  replace: 1.0
+  shifting: False
