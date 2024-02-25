@@ -1,0 +1,20 @@
+log_save_path: ./log_save/FHSA2_cifar10_ResNet34.txt
+
+device: cuda:0
+
+dataset: cifar10
+dataset_repo: ./dataRepo/cifar10
+model: VGG16
+channel: 1
+batch: 64
+step: 500
+
+FSHA_BA_AUX:
+  alpha: 0.1
+
+AUX:
+  sample_per_class: 5000
+  noise: 0.0
+  p: 0.1
+  reset_aux_model_epoch: 1
+  replace: 0.9

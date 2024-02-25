@@ -8,10 +8,6 @@ dataset_repo: ./dataRepo/cifar100
 batch: 64
 server_freeze: False
 
-
-defense:
-  sigma: 0
-
 AUX:
   sample_per_class: 50000 # useless
   noise: 0.0
