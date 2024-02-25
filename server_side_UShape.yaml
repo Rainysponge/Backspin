@@ -6,7 +6,6 @@ dataset: cifar100
 dataset_repo: ./dataRepo/cifar100
 
 batch: 64
-step: 400 # useless
 
 AUX:
   sample_per_class: 500000 # useless
