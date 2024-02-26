@@ -10,8 +10,8 @@ transform_mnist = transforms.Compose([
     transforms.Normalize((0.1307,), (0.3081,))
 ])
 transform_cifar10 = transforms.Compose([
-    transforms.ToTensor(),  # numpy --> Tensor
-    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # 归一化，范围[-1, 1]
+    transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
 class Cutout(object):
